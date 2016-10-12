@@ -37,7 +37,14 @@ uint16_t readKanal(uint8_t derKanal) //Unsere Funktion zum ADC-Channel aus lesen
   uint16_t result = 0;         //Initialisieren wichtig, da lokale Variablen
                                //nicht automatisch initialisiert werden und
                                //zufällige Werte haben. Sonst kann Quatsch rauskommen
- ADMUX = derKanal;
+ ADMUX = (derKanal&0x07);
+   // VCC
+   
+   
+   // interne Referenz 2.56V
+   ADMUX |= (1<<REFS2);
+   ADMUX |= (1<<REFS1);
+
 //ADMUX |= (1<<REFS0);
   // Eigentliche Messung - Mittelwert aus 4 aufeinanderfolgenden Wandlungen
   for(i=0;i<4;i++)
